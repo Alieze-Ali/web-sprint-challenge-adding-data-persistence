@@ -17,6 +17,11 @@ router.get('/', (req, res, next) => {
 })
 
 // `[POST] /api/resources`
-
+router.post('/', (req, res, next) => {
+    Resource.createNewResource(req.body)
+    .then(created => res.status(201)
+    .json(created))
+    .catch(next)
+})
 
 module.exports = router
