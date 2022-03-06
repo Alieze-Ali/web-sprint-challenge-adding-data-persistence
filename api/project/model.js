@@ -1,9 +1,35 @@
 // build your `Project` model here
-// cant get it 
-function getAllProjects() {
-    return Promise.resolve('awesome project!')
+
+const db = require('../../data/dbConfig')
+
+
+const getAllProjects = async id => {
+    const projects = id
+    ? await db('projects')
+    .where('project_id', id)
+    : await db('projects')
+
+    return projects.map(project => {
+        if (!project) {
+            return []
+        }
+        return {
+            project_id: project.project_id,
+            project_name: project.project_name,
+            project_description: project.project_description,
+            project_completed: project.project_completed !==0
+        }
+    })
+}
+
+const createNewProject = async project => {
+    const created = project
+    await db('projects')
+    .insert(project)
+    return created
 }
 
 module.exports = {
-    getAllProjects
+    getAllProjects,
+    createNewProject
 }

@@ -7,7 +7,7 @@ const Project = require('./model')
 router.get('/', (req, res, next) => {
     Project.getAllProjects()
     .then((projects) => {
-        throw new Error("ARRRGGHHH")
+        //throw new Error("ARRRGGHHH")
         res.status(200).json(projects)
     })
     .catch(next)
@@ -15,6 +15,12 @@ router.get('/', (req, res, next) => {
 
 
 // `[POST] /api/projects`
+router.post('/', (req, res, next) => {
+    Project.createNewProject(req.body)
+    .then(created => res.status(201)
+    .json(created))
+    .catch(next)
+})
 
 
 router.use((err, req, res, next) => {
