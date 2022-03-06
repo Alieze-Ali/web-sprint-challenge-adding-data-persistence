@@ -1,8 +1,10 @@
 // build your `/api/resources` router here
-const express = require('express')
+const router = require('express').Router()
 const Resource = require('./model')
-const router = express.Router()
 
+router.use('*', (req, res) => {
+    res.json({api: 'resources up'})
+})
 
 
 
