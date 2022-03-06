@@ -2,16 +2,25 @@
 const router = require('express').Router()
 const Task = require('./model')
 
+// ??? WHY DOES THIS NOT WORK ???
 // `[GET] /api/tasks`
-router.get('/', (req, res, next) => {
-    Task.getAllTasks()
-    .then((tasks) => {
-        //throw new Error("ARRRGGHHH")
-        res.status(200).json(tasks)
-    })
-    .catch(next)
-})
+// router.get('/', (req, res, next) => {
+//     Task.getAllTasks()
+//     .then((tasks) => {
+//         //throw new Error("ARRRGGHHH")
+//         res.status(200).json(tasks)
+//     })
+//     .catch(next)
+// })
 
+router.get('/', async (req, res, next) => {
+    try {
+        const tasks = await Task.getAllTasks();
+        res.status(200).json(tasks)
+    } catch (err) {
+        next(err);
+    }
+});
 
 
 // `[POST] /api/tasks`
@@ -21,6 +30,8 @@ router.post('/', (req, res, next) => {
     .json(created))
     .catch(next)
 })
+
+
 
 
 router.use((err, req, res, next) => {
