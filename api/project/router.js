@@ -3,10 +3,19 @@ const router = require('express').Router()
 const Project = require('./model')
 
 
-//test projects router
-router.use('*', (req, res) => {
-    res.json({api: 'projects up'})
+// `[GET] /api/projects`
+router.get('/', (req, res, next) => {
+    Project.getAllProjects()
+    .then((projects) => {
+        throw new Error("ARRRGGHHH")
+        res.status(200).json(projects)
+    })
+    .catch(next)
 })
+
+
+// `[POST] /api/projects`
+
 
 router.use((err, req, res, next) => {
     res.status(500).json({
